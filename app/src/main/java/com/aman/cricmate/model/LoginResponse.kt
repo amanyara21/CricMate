@@ -5,6 +5,7 @@ data class LoginResponse(
     val token: String,
     val role: Role,
 )
+
 data class ApiError(
     var error: String
 )

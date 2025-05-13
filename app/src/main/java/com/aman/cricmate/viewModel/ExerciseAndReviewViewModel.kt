@@ -43,7 +43,7 @@ class ExerciseAndReviewViewModel @Inject constructor(
             try {
                 val token = preferenceHelper.getAuthToken()
                 Log.d("review", token!!)
-                val response = apiService.getPlayerReview(token!!, "last7days")
+                val response = apiService.getPlayerReview(token, "last7days")
                 Log.d("review", response.body().toString())
                 if (response.isSuccessful) {
                     playerReviews = response.body()

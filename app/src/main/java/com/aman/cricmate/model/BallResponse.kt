@@ -2,7 +2,7 @@ package com.aman.cricmate.model
 
 import io.github.sceneview.math.Position
 
-data class BallResponse (
+data class BallResponse(
     val _id: String,
     val userId: String,
     val date: String,
@@ -10,6 +10,7 @@ data class BallResponse (
     val speed: Double,
     val coordinates: List<Position>? = emptyList()
 )
+
 data class StatsData(
     val totalBalls: Int,
     val avgSpeed: Double,

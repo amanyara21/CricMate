@@ -8,20 +8,16 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
-class CricketApp : Application(), Configuration.Provider{
+class CricketApp : Application(), Configuration.Provider {
 
-    @Inject lateinit var workerFactory : HiltWorkerFactory
-
-    override fun onCreate() {
-        super.onCreate()
-    }
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .setMinimumLoggingLevel(Log.DEBUG)
             .build()
-
 
 
 }

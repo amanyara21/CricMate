@@ -18,9 +18,11 @@ class PreferenceHelper @Inject constructor(@ApplicationContext val context: Cont
     fun getAuthToken(): String? {
         return prefs.getString("auth_token", null)
     }
+
     fun getAngle(): String? {
         return prefs.getString("angle", "front")
     }
+
     fun deletePrefrences() {
         prefs.edit().remove("auth_token").apply()
         prefs.edit().remove("angle").apply()

@@ -30,21 +30,20 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aman.cricmate.components.ReusableClickableCard
-import com.aman.cricmate.model.Event
 import com.aman.cricmate.viewModel.EventViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
 fun EventPreviewScreen(
-    navController:NavController,
+    navController: NavController,
     currentUserId: String,
     eventId: String,
     viewModel: EventViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val selectedEvent= viewModel.selectedEvent
-    val applicants= viewModel.applicants
+    val selectedEvent = viewModel.selectedEvent
+    val applicants = viewModel.applicants
     var isApplied by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -68,7 +67,14 @@ fun EventPreviewScreen(
                     color = Color(0xFF0D47A1)
                 )
                 Text(ev.description, fontSize = 16.sp)
-                Text("📅 Date: ${SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(ev.date)}")
+                Text(
+                    "📅 Date: ${
+                        SimpleDateFormat(
+                            "dd-MM-yyyy",
+                            Locale.getDefault()
+                        ).format(ev.date)
+                    }"
+                )
                 Text("📍 Location: ${ev.location}")
                 Text("👤 Created by: ${ev.createdBy.name}")
 
@@ -100,7 +106,8 @@ fun EventPreviewScreen(
                                     isApplied = true
                                     Toast.makeText(context, "Applied!", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(context, "Failed to apply!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Failed to apply!", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
                             }
                         },

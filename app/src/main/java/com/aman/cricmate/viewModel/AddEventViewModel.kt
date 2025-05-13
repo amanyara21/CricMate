@@ -5,14 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aman.cricmate.model.Event
 import com.aman.cricmate.model.EventRequest
 import com.aman.cricmate.utils.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,7 +55,7 @@ class AddEventViewModel @Inject constructor(
                     location = location,
                     date = date!!
                 )
-                val token= preferenceHelper.getAuthToken()
+                val token = preferenceHelper.getAuthToken()
                 val response = apiService.createEvent(token!!, event)
                 if (response.isSuccessful) {
                     successMessage = "Event created successfully!"

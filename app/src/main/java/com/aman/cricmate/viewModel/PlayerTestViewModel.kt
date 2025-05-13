@@ -7,10 +7,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aman.cricmate.model.Constants
 import com.aman.cricmate.model.ResultEntry
 import com.aman.cricmate.model.TestResult
 import com.aman.cricmate.model.User
-import com.aman.cricmate.model.Constants
 import com.aman.cricmate.utils.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,9 +28,10 @@ class PlayerTestViewModel @Inject constructor(
     var isSubmitting by mutableStateOf(false)
     var date by mutableStateOf<Date>(Date())
 
-    fun onDateChange(newDate: Date){
-        date= newDate
+    fun onDateChange(newDate: Date) {
+        date = newDate
     }
+
     fun fetchPlayers() {
         viewModelScope.launch {
             try {

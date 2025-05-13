@@ -16,30 +16,30 @@ import javax.inject.Inject
 class CoachHomeViewModel @Inject constructor(
     private val apiService: ApiService,
     private val preferenceHelper: PreferenceHelper
-): ViewModel() {
+) : ViewModel() {
 
     var players by mutableStateOf<List<User>>(emptyList())
     var isLoading by mutableStateOf(false)
 
     var errorMessage by mutableStateOf<String?>(null)
 
-    init{
+    init {
         Log.d("Hello", "Hello")
         getAllPlayers()
     }
 
-    private fun getAllPlayers(){
+    private fun getAllPlayers() {
         viewModelScope.launch {
             isLoading = true
             try {
                 Log.d("Hello", "Hello")
                 val token = preferenceHelper.getAuthToken()
                 val response = apiService.getAllPlayers(token!!)
-                if(response.isSuccessful){
-                    players= response.body()!!
+                if (response.isSuccessful) {
+                    players = response.body()!!
                 }
             } catch (e: Exception) {
-
+                errorMessage= e.message
             } finally {
                 isLoading = false
             }

@@ -1,21 +1,16 @@
 package com.aman.cricmate.viewModel
 
-import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aman.cricmate.model.ApiError
-import com.aman.cricmate.model.LoginRequest
 import com.aman.cricmate.model.LoginResponse
 import com.aman.cricmate.model.Role
-import com.aman.cricmate.model.SignupRequest
 import com.aman.cricmate.utils.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -30,7 +25,7 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(
     private val apiService: ApiService,
     private val preferenceHelper: PreferenceHelper
-): ViewModel() {
+) : ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
     var name by mutableStateOf("")
@@ -43,6 +38,7 @@ class SignupViewModel @Inject constructor(
     fun onRoleSelected(selected: Role) {
         role = selected
     }
+
     fun onNameChange(value: String) {
         name = value
     }
@@ -50,16 +46,18 @@ class SignupViewModel @Inject constructor(
     fun onEmailChange(value: String) {
         email = value
     }
+
     fun onPasswordChange(value: String) {
         password = value
     }
+
     fun onProfileImageChange(uri: Uri?) {
         profilePhoto = uri
     }
 
-    fun signup(){
+    fun signup() {
         if (name.isBlank() || email.isBlank() || password.isBlank()) {
-            errorMessage =ApiError("Please fill all fields before signing up.")
+            errorMessage = ApiError("Please fill all fields before signing up.")
             return
         }
         viewModelScope.launch {
@@ -69,7 +67,8 @@ class SignupViewModel @Inject constructor(
                 val contentResolver = preferenceHelper.context.contentResolver
                 val imagePart = profilePhoto?.let {
                     val inputStream = contentResolver.openInputStream(it)
-                    val file = File.createTempFile("temp", ".jpg", preferenceHelper.context.cacheDir)
+                    val file =
+                        File.createTempFile("temp", ".jpg", preferenceHelper.context.cacheDir)
                     inputStream?.use { input ->
                         file.outputStream().use { output -> input.copyTo(output) }
                     }

@@ -23,7 +23,7 @@ class TestResultViewModel @Inject constructor(private val apiService: ApiService
 
     var isLoading by mutableStateOf(false)
 
-    fun fetchResults(fieldName: String, filter: String, userId: String ) {
+    fun fetchResults(fieldName: String, filter: String, userId: String) {
         viewModelScope.launch {
             isLoading = true
             error = null

@@ -15,19 +15,19 @@ import javax.inject.Inject
 @HiltViewModel
 class ThreeDViewModel @Inject constructor(
     private val apiService: ApiService
-): ViewModel() {
+) : ViewModel() {
     var trackingPoints by mutableStateOf<List<Position>>(emptyList())
-    var ballResponse by mutableStateOf<BallResponse?>(null)
-
-    fun getBallDetails(ballId:String){
+//    var ballResponse by mutableStateOf<BallResponse?>(null)
+    var error by mutableStateOf<String?>(null)
+    fun getBallDetails(ballId: String) {
         viewModelScope.launch {
             try {
-                val response= apiService.getBallById(ballId)
-                if(response.isSuccessful){
-                    trackingPoints= response.body()?.coordinates ?: emptyList()
+                val response = apiService.getBallById(ballId)
+                if (response.isSuccessful) {
+                    trackingPoints = response.body()?.coordinates ?: emptyList()
                 }
-            }catch (e:Exception){
-
+            } catch (e: Exception) {
+                error=e.message
             }
         }
     }

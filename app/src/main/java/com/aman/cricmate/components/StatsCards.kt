@@ -45,7 +45,11 @@ fun FullStatCardWithProgress(title: String, completed: Int, total: Int, backgrou
             Column(
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = title, style = MaterialTheme.typography.titleMedium, color = Color.Black)
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.Black
+                )
                 Text(
                     text = "$completed / $total",
                     style = MaterialTheme.typography.headlineSmall,

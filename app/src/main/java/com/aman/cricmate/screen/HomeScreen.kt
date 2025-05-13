@@ -1,6 +1,5 @@
 package com.aman.cricmate.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -51,12 +49,12 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
     val ballStats = viewModel.ballStats
-    val playerReviews= viewModel.playerReviews
-    val todaysExercise= viewModel.todaysExerices
+    val playerReviews = viewModel.playerReviews
+    val todaysExercise = viewModel.todaysExerices
     LaunchedEffect(Unit) {
-            userSessionManager.id.value!!.let { viewModel.getBallStats(userId = it) }
-            viewModel.getPlayerReview()
-            viewModel.getTodaysExercise()
+        userSessionManager.id.value!!.let { viewModel.getBallStats(userId = it) }
+        viewModel.getPlayerReview()
+        viewModel.getTodaysExercise()
     }
 
 
@@ -101,7 +99,7 @@ fun HomeScreen(
                         color = Color(0xFF5B5B5B)
                     )
                     Text(
-                        text = userSessionManager.name.value?:"Aman",
+                        text = userSessionManager.name.value ?: "Aman",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color(0xFF311B92)
                     )
@@ -165,27 +163,28 @@ fun HomeScreen(
             style = MaterialTheme.typography.titleLarge,
             color = Color(0xFF311B92)
         )
-        if(todaysExercise!=null){
+        if (todaysExercise != null) {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(todaysExercise.exercises) {
-                    ExerciseCard( it.name, it.reps, it.duration, Color(0xFFB3E5FC))
+                    ExerciseCard(it.name, it.reps, it.duration, Color(0xFFB3E5FC))
                 }
             }
         }
 
 
-        if(playerReviews!=null && playerReviews.reviews.isNotEmpty()){
+        if (playerReviews != null && playerReviews.reviews.isNotEmpty()) {
             Text(
                 text = "Yesterday's Coach Review",
                 style = MaterialTheme.typography.titleLarge,
                 color = Color(0xFF311B92)
             )
             LazyRow {
-                items(playerReviews.reviews){
+                items(playerReviews.reviews) {
                     GlassCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(IntrinsicSize.Min)) {
+                            .height(IntrinsicSize.Min)
+                    ) {
                         Column(
                             modifier = Modifier.padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)

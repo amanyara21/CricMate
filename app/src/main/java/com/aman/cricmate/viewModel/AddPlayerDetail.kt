@@ -13,12 +13,8 @@ import com.aman.cricmate.model.AddDetailsResponse
 import com.aman.cricmate.model.Coach
 import com.aman.cricmate.utils.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,8 +23,9 @@ class AddPlayerViewModel @Inject constructor(private val apiService: ApiService)
     var dob by mutableStateOf<Date?>(null)
 
     fun updateDob(date: Date) {
-       dob=date
+        dob = date
     }
+
     var armType by mutableStateOf("")
     var bowlingType by mutableStateOf("")
     var selectedCoaches = mutableStateListOf<Coach>()
@@ -61,8 +58,8 @@ class AddPlayerViewModel @Inject constructor(private val apiService: ApiService)
         viewModelScope.launch {
             try {
                 val response = apiService.getAllCoaches()
-                if(response.isSuccessful){
-                    coachList= response.body()!!
+                if (response.isSuccessful) {
+                    coachList = response.body()!!
                 }
                 isLoading = false
             } catch (e: Exception) {
@@ -71,24 +68,26 @@ class AddPlayerViewModel @Inject constructor(private val apiService: ApiService)
             }
         }
     }
-    fun addDetail(context:Context){
+
+    fun addDetail(context: Context) {
         Log.d("token", "Is Calling")
-        isLoading=true
-        errorMessage=null
+        isLoading = true
+        errorMessage = null
         viewModelScope.launch {
             try {
-                val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
-                val token= sharedPreferences.getString("auth_token", null)
+                val sharedPreferences =
+                    context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+                val token = sharedPreferences.getString("auth_token", null)
 
                 val addDetailsRequest = AddDetailsRequest(
-                    dob =dob!!,
+                    dob = dob!!,
                     bowlingType = bowlingType,
                     bowlingArm = armType,
                     coaches = selectedCoaches
                 )
                 val response = apiService.addDetail(token!!, addDetailsRequest)
-                if(response.isSuccessful){
-                    addResponse=response.body()!!
+                if (response.isSuccessful) {
+                    addResponse = response.body()!!
                     Log.d("token", response.body()!!.toString())
                 }
                 isLoading = false

@@ -16,7 +16,6 @@ import com.aman.cricmate.screen.BallStatsScreen
 import com.aman.cricmate.screen.BallsScreen
 import com.aman.cricmate.screen.CameraScreen
 import com.aman.cricmate.screen.CoachScreen
-import com.aman.cricmate.screen.StatsScreen
 import com.aman.cricmate.screen.CoachSelectionScreen
 import com.aman.cricmate.screen.EventPreviewScreen
 import com.aman.cricmate.screen.LoginScreen
@@ -25,6 +24,7 @@ import com.aman.cricmate.screen.PlayerProfileScreen
 import com.aman.cricmate.screen.ProfileAndTest
 import com.aman.cricmate.screen.SignupScreen
 import com.aman.cricmate.screen.SplashScreen
+import com.aman.cricmate.screen.StatsScreen
 import com.aman.cricmate.screen.TestListScreen
 import com.aman.cricmate.screen.ThreeDBallView
 import com.aman.cricmate.viewModel.AddPlayerViewModel
@@ -47,53 +47,53 @@ fun AppNavigation(userSessionManager: UserSessionManager) {
             SignupScreen(navController)
         }
         composable("Camera") {
-            CameraScreen(navController, userSessionManager)
+            CameraScreen(userSessionManager)
         }
         composable("Coach") {
             CoachScreen(navController)
         }
-        composable("TestList/{userId}") {backStackEntry->
+        composable("TestList/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             TestListScreen(navController, userId = userId)
         }
-        composable("stats/{field}/{userId}") {backStackEntry->
+        composable("stats/{field}/{userId}") { backStackEntry ->
             val field = backStackEntry.arguments?.getString("field") ?: ""
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
-            StatsScreen(userId = userId, field=field)
+            StatsScreen(userId = userId, field = field)
         }
-        composable("userProfile/{userId}") {backStackEntry->
+        composable("userProfile/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
-            PlayerProfileScreen(navController , userId, true)
+            PlayerProfileScreen(navController, userId, true)
         }
         composable("addEvent") {
             AddEventScreen()
         }
-        composable("addData/{field}") {backStackEntry->
+        composable("addData/{field}") { backStackEntry ->
             val field = backStackEntry.arguments?.getString("field") ?: ""
             AddTestData(field)
         }
-        composable("eventpreview/{userId}/{eventId}") {backStackEntry->
+        composable("eventpreview/{userId}/{eventId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             val eventId = backStackEntry.arguments?.getString("eventId") ?: ""
-            EventPreviewScreen(navController,userId, eventId)
+            EventPreviewScreen(navController, userId, eventId)
         }
-        composable("profilewithtest/{userId}") {backStackEntry->
+        composable("profilewithtest/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
-            ProfileAndTest(navController,userId)
+            ProfileAndTest(navController, userId)
         }
-        composable("review/{userId}") {backStackEntry->
+        composable("review/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             AddPlayerReview(userId)
         }
-        composable("ballScreen/{userId}") {backStackEntry->
+        composable("ballScreen/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             BallsScreen(navController, userId)
         }
-        composable("ballStats/{userId}") {backStackEntry->
+        composable("ballStats/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             BallStatsScreen(userId)
         }
-        composable("show3d/{ballId}") {backStackEntry->
+        composable("show3d/{ballId}") { backStackEntry ->
             val ballId = backStackEntry.arguments?.getString("ballId") ?: ""
             ThreeDBallView(ballId)
         }

@@ -1,18 +1,15 @@
 package com.aman.cricmate.viewModel
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aman.cricmate.model.LoginRequest
 import com.aman.cricmate.model.LoginResponse
 import com.aman.cricmate.utils.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -21,12 +18,12 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val apiService: ApiService,
     private val preferenceHelper: PreferenceHelper
-): ViewModel() {
+) : ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
     var isLoading by mutableStateOf(false)
-    var alreadyLogin by mutableStateOf(false)
-    var sideAngle by mutableStateOf(false)
+//    var alreadyLogin by mutableStateOf(false)
+//    var sideAngle by mutableStateOf(false)
     var loginState by mutableStateOf<LoginResponse?>(null)
     var errorMessage by mutableStateOf<String?>(null)
 

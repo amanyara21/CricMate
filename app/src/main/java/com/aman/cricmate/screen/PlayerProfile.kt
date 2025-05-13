@@ -12,16 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,8 +49,6 @@ import coil.compose.AsyncImage
 import com.aman.cricmate.model.Constants
 import com.aman.cricmate.viewModel.UserProfileViewModel
 import java.text.SimpleDateFormat
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
@@ -78,9 +73,9 @@ fun PlayerProfileScreen(
         viewModel.getPlayerDetails(userId)
     }
     LaunchedEffect(logout) {
-        if(logout){
-            navController.navigate("Login"){
-                popUpTo("main"){inclusive=true}
+        if (logout) {
+            navController.navigate("Login") {
+                popUpTo("main") { inclusive = true }
             }
         }
     }
@@ -107,7 +102,7 @@ fun PlayerProfileScreen(
                 val details = playerDetails!!
 
                 AsyncImage(
-                    model = Constants.serverUrl+ details.user.profilePhoto,
+                    model = Constants.serverUrl + details.user.profilePhoto,
                     contentDescription = "Profile",
                     modifier = Modifier
                         .size(120.dp)
@@ -174,7 +169,7 @@ fun PlayerProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     cardColor = Color(0xFFDCEDC8)
                 )
-                if(isMe) {
+                if (isMe) {
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
                         onClick = { viewModel.userLogout() },
@@ -223,12 +218,22 @@ fun InfoCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(icon, contentDescription = title, tint = Color.Black, modifier = Modifier.size(20.dp))
+                Icon(
+                    icon,
+                    contentDescription = title,
+                    tint = Color.Black,
+                    modifier = Modifier.size(20.dp)
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(title, fontWeight = FontWeight.Medium, fontSize = 14.sp)
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(value, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF212121))
+            Text(
+                value,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF212121)
+            )
         }
     }
 }
@@ -249,7 +254,12 @@ fun CoachesCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(icon, contentDescription = title, tint = Color.Black, modifier = Modifier.size(20.dp))
+                Icon(
+                    icon,
+                    contentDescription = title,
+                    tint = Color.Black,
+                    modifier = Modifier.size(20.dp)
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(title, fontWeight = FontWeight.Medium, fontSize = 14.sp)
             }

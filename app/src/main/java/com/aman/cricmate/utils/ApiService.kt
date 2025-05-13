@@ -14,7 +14,6 @@ import com.aman.cricmate.model.LoginResponse
 import com.aman.cricmate.model.PlayerDetails
 import com.aman.cricmate.model.PlayerReviewRequest
 import com.aman.cricmate.model.PlayerReviewResponse
-import com.aman.cricmate.model.SignupRequest
 import com.aman.cricmate.model.StatsData
 import com.aman.cricmate.model.TestResult
 import com.aman.cricmate.model.User
@@ -33,7 +32,7 @@ import java.util.Date
 
 interface ApiService {
 
-//  Authentication Requests
+    //  Authentication Requests
     @GET("auth/getuser")
     suspend fun getUser(
         @Header("authentication") authToken: String
@@ -46,22 +45,22 @@ interface ApiService {
     @POST("auth/signup")
     suspend fun signup(
         @Part profilePhoto: MultipartBody.Part?,
-       @Part("name") name: RequestBody,
-       @Part("email") email: RequestBody,
-       @Part("password") password: RequestBody,
-       @Part("role") role: RequestBody
+        @Part("name") name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("role") role: RequestBody
     ): Response<LoginResponse>
 
-//    Coaches Request
+    //    Coaches Request
     @GET("coaches")
-    suspend fun getAllCoaches():Response<List<Coach>>
+    suspend fun getAllCoaches(): Response<List<Coach>>
 
     @GET("coaches/players")
     suspend fun getAllPlayers(
         @Header("authentication") authToken: String
     ): Response<List<User>>
 
-//    Players Request
+    //    Players Request
     @POST("player/adddetails")
     suspend fun addDetail(
         @Header("authentication") authToken: String,
@@ -71,7 +70,7 @@ interface ApiService {
     @GET("player/getDetails/{userId}")
     suspend fun getDetails(@Path("userId") userId: String): Response<PlayerDetails>
 
-//    Player Test Data Request
+    //    Player Test Data Request
     @GET("test/get-data")
     suspend fun getPlayerTestData(
         @Query("fieldName") fieldName: String,
@@ -85,7 +84,7 @@ interface ApiService {
         @Body testResultRequest: TestResult
     ): Response<ApiResponse>
 
-//   Events
+    //   Events
     @POST("event/create")
     suspend fun createEvent(
         @Header("authentication") authToken: String,
@@ -97,7 +96,7 @@ interface ApiService {
 
     @GET("event/getEvent/{eventId}")
     suspend fun getEventById(
-        @Path("eventId") eventId:String
+        @Path("eventId") eventId: String
     ): Response<Event>
 
     @POST("event/{eventId}/apply")
@@ -108,7 +107,8 @@ interface ApiService {
 
     @GET("event/{eventId}/applicants")
     suspend fun getApplicants(@Path("eventId") eventId: String): Response<List<User>>
-//   Player Review
+
+    //   Player Review
     @POST("review/add-review")
     suspend fun addPlayerReview(
         @Header("authentication") authToken: String,
@@ -121,7 +121,7 @@ interface ApiService {
         @Path("filter") filter: String
     ): Response<PlayerReviewResponse>
 
-//    Exercises
+    //    Exercises
     @GET("exercise/today")
     suspend fun getTodaysExercise(): Response<DailyExercise>
 
@@ -132,7 +132,7 @@ interface ApiService {
         @Path("sessionId") sessionId: String
     ): Response<ApiResponse>
 
-//    Ball API
+    //    Ball API
     @GET("ball/{userId}/{date}")
     suspend fun getBallsByDate(
         @Path("userId") userId: String,

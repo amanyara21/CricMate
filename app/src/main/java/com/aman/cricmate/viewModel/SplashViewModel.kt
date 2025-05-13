@@ -14,11 +14,13 @@ class SplashViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
     var angle by mutableStateOf("")
-    init{
+
+    init {
         initUserSession()
     }
+
     private fun initUserSession() {
-        angle= authRepository.getAngle()!!
+        angle = authRepository.getAngle()!!
         viewModelScope.launch {
             authRepository.getUser()
         }

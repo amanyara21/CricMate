@@ -50,12 +50,13 @@ class UserProfileViewModel @Inject constructor(
             }
         }
     }
-    fun userLogout(){
+
+    fun userLogout() {
         try {
             preferenceHelper.deletePrefrences()
-            logout=true
-        }catch (e:Exception){
-
+            logout = true
+        } catch (e: Exception) {
+            _error.value = "Exception: ${e.message}"
         }
     }
 }

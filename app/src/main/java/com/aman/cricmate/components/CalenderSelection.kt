@@ -78,7 +78,7 @@ fun CalendarSelection(title: String, selectedDate: Date?, onDateSelected: (Date)
             ) {
                 Icon(Icons.Default.DateRange, contentDescription = "Pick Date")
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = selectedDate?.let { dateFormat.format(it) } ?: "Select Date",)
+                Text(text = selectedDate?.let { dateFormat.format(it) } ?: "Select Date")
             }
         }
     }

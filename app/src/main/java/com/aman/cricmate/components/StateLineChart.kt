@@ -1,8 +1,8 @@
 package com.aman.cricmate.components
 
 import android.graphics.Color
-import android.view.ViewGroup
 import android.graphics.Typeface
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable

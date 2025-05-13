@@ -20,7 +20,8 @@ fun detectBallPositionsFromVideo(context: Context, videoUri: Uri, time: String?)
     try {
         retriever.setDataSource(context, videoUri)
 
-        val durationMs = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0L
+        val durationMs =
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0L
         val frameInterval = 50L
 
         val model = LocalModel.Builder()

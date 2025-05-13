@@ -92,7 +92,7 @@ class BallStatsViewModel @Inject constructor(private val apiService: ApiService)
             error = null
             try {
                 val response = apiService.getStatsByFilter(userId, filter)
-                    stats=sampleStatsData
+                stats = sampleStatsData
                 if (response.isSuccessful) {
 //                    stats = response.body()?.stats ?: emptyList()
                 } else {

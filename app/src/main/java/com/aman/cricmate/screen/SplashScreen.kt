@@ -59,9 +59,11 @@ fun SplashScreen(
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "CricMate Logo",
-            modifier = Modifier.size(300.dp).clip(
-                RoundedCornerShape(30)
-            )
+            modifier = Modifier
+                .size(300.dp)
+                .clip(
+                    RoundedCornerShape(30)
+                )
         )
     }
 }

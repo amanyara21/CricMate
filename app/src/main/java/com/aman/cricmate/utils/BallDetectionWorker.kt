@@ -38,7 +38,7 @@ class BallDetectionWorker @AssistedInject constructor(
 
             val response = apiService.analyseBall(userId, sessionId)
 
-            if(response.isSuccessful) Result.success()
+            if (response.isSuccessful) Result.success()
             else Result.retry()
         } catch (e: Exception) {
             e.printStackTrace()

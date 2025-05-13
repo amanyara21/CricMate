@@ -1,6 +1,6 @@
 package com.aman.cricmate.model
 
-enum class Role{
+enum class Role {
     PLAYER,
     COACH
 }

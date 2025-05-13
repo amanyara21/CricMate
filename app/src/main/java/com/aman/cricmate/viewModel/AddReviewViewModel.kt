@@ -1,6 +1,5 @@
 package com.aman.cricmate.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,8 +23,8 @@ class AddReviewViewModel @Inject constructor(
     var errorMessage by mutableStateOf<String?>(null)
 
     fun submitReview(userId: String) {
-        errorMessage=null
-        successMessage=null
+        errorMessage = null
+        successMessage = null
         viewModelScope.launch {
             try {
                 isSubmitting = true

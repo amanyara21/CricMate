@@ -27,14 +27,16 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.navigation.NavHostController
 import com.aman.cricmate.di.UserSessionManager
 import com.aman.cricmate.viewModel.CameraViewModel
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 @Composable
-fun CameraScreen(navController: NavHostController, user:UserSessionManager, viewModel: CameraViewModel = hiltViewModel()) {
+fun CameraScreen(
+    user: UserSessionManager,
+    viewModel: CameraViewModel = hiltViewModel()
+) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val previewView = remember { PreviewView(context) }

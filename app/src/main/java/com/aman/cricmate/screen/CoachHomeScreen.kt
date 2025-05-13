@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -65,7 +63,7 @@ fun CoachHomeScreen(
                         backgroundColor = backgroundColor,
                         buttonText = "Show Data",
                         showAddReviewButton = true,
-                        onAddReviewClick = {navController.navigate("review/${player._id}")}
+                        onAddReviewClick = { navController.navigate("review/${player._id}") }
                     ) {
                         navController.navigate("testlist/${player._id}")
                     }

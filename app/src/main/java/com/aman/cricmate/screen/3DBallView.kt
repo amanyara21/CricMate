@@ -7,15 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.aman.cricmate.viewModel.BallsViewModel
 import com.aman.cricmate.viewModel.ThreeDViewModel
-import kotlinx.coroutines.delay
-import kotlin.math.acos
-import kotlin.math.asin
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
 import io.github.sceneview.Scene
 import io.github.sceneview.loaders.ModelLoader
 import io.github.sceneview.math.Position
@@ -24,11 +16,18 @@ import io.github.sceneview.node.ModelNode
 import io.github.sceneview.rememberCameraNode
 import io.github.sceneview.rememberEngine
 import io.github.sceneview.rememberModelLoader
+import kotlinx.coroutines.delay
+import kotlin.math.acos
+import kotlin.math.asin
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 @Composable
-fun ThreeDBallView(ballId:String, viewModel: ThreeDViewModel = hiltViewModel()) {
-    val trackingPoints= viewModel.trackingPoints
+fun ThreeDBallView(ballId: String, viewModel: ThreeDViewModel = hiltViewModel()) {
+    val trackingPoints = viewModel.trackingPoints
     val engine = rememberEngine()
     val modelLoader = rememberModelLoader(engine)
     val cameraNode = rememberCameraNode(engine)
@@ -45,16 +44,16 @@ fun ThreeDBallView(ballId:String, viewModel: ThreeDViewModel = hiltViewModel()) 
         }
     }
 
-    val xValues = trackingPoints?.map { it.x }
-    val yValues = trackingPoints?.map { it.y }
-    val zValues = trackingPoints?.map { it.z }
+    val xValues = trackingPoints.map { it.x }
+    val yValues = trackingPoints.map { it.y }
+    val zValues = trackingPoints.map { it.z }
 
-    val xMin = xValues?.minOrNull() ?: 0f
-    val xMax = xValues?.maxOrNull() ?: 1f
-    val yMin = yValues?.minOrNull() ?: 0f
-    val yMax = yValues?.maxOrNull() ?: 1f
-    val zMin = zValues?.minOrNull() ?: 0f
-    val zMax = zValues?.maxOrNull() ?: 1f
+    val xMin = xValues.minOrNull() ?: 0f
+    val xMax = xValues.maxOrNull() ?: 1f
+    val yMin = yValues.minOrNull() ?: 0f
+    val yMax = yValues.maxOrNull() ?: 1f
+    val zMin = zValues.minOrNull() ?: 0f
+    val zMax = zValues.maxOrNull() ?: 1f
 
     val traceNodes = remember { mutableStateListOf<ModelNode>() }
 
@@ -62,18 +61,44 @@ fun ThreeDBallView(ballId:String, viewModel: ThreeDViewModel = hiltViewModel()) 
     LaunchedEffect(Unit) {
         for (i in 0 until trackingPoints.lastIndex) {
 
-                val (x1, y1, z1) = trackingPoints[i]
-                val (x2, y2, z2) = trackingPoints[i + 1]
+            val (x1, y1, z1) = trackingPoints[i]
+            val (x2, y2, z2) = trackingPoints[i + 1]
 
-                val fromPos = mapToSceneCoordinates3D(x1, y1, z1, xMin, xMax, yMin, yMax, zMin, zMax, 0f to 12f, 0f to 25f, -20f to 0f)
-                val toPos = mapToSceneCoordinates3D(x2, y2, z2, xMin, xMax, yMin, yMax, zMin, zMax, 0f to 12f, 0f to 25f, -20f to 0f)
+            val fromPos = mapToSceneCoordinates3D(
+                x1,
+                y1,
+                z1,
+                xMin,
+                xMax,
+                yMin,
+                yMax,
+                zMin,
+                zMax,
+                0f to 12f,
+                0f to 25f,
+                -20f to 0f
+            )
+            val toPos = mapToSceneCoordinates3D(
+                x2,
+                y2,
+                z2,
+                xMin,
+                xMax,
+                yMin,
+                yMax,
+                zMin,
+                zMax,
+                0f to 12f,
+                0f to 25f,
+                -20f to 0f
+            )
 
-                animateXYZPosition(ballNode, fromPos, toPos, 100)
+            animateXYZPosition(ballNode, fromPos, toPos, 100)
 
 
-                val traceNode = createTraceLine(modelLoader, fromPos, toPos)
-                traceNodes.addAll(traceNode)
-            }
+            val traceNode = createTraceLine(modelLoader, fromPos, toPos)
+            traceNodes.addAll(traceNode)
+        }
     }
 
 

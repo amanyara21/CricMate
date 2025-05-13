@@ -2,15 +2,14 @@ package com.aman.cricmate
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.aman.cricmate.di.UserSessionManager
 import com.aman.cricmate.ui.theme.CricMateTheme
 import com.aman.cricmate.utils.PermissionManager
-import com.aman.cricmate.viewModel.SplashViewModel
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,20 +30,13 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        if (userSessionManager.name!=null) {
-            Log.d("MainActivity", "User is already logged in")
-            // Handle navigation or show appropriate UI
-        } else {
-            Log.d("MainActivity", "User is not logged in")
-            // You can handle navigation to login or show splash screen if needed
-        }
     }
 }
 
 
 @Composable
 fun GetPermission(content: @Composable () -> Unit) {
+    val context = LocalContext.current
     val permissionsToRequest = listOf(
         Manifest.permission.RECORD_AUDIO,
         Manifest.permission.CAMERA,
@@ -57,7 +49,7 @@ fun GetPermission(content: @Composable () -> Unit) {
         onPermissionsResult = { results ->
             val permissionsGranted = results.all { it.value }
             if (!permissionsGranted) {
-//                Toast.makeText("Hello")
+                Toast.makeText(context,"Hello", Toast.LENGTH_SHORT).show()
             }
         }
     )

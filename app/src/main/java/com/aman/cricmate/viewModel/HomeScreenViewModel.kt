@@ -1,6 +1,5 @@
 package com.aman.cricmate.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -41,6 +40,7 @@ class HomeScreenViewModel @Inject constructor(
             }
         }
     }
+
     fun getPlayerReview() {
         viewModelScope.launch {
             try {
@@ -56,6 +56,7 @@ class HomeScreenViewModel @Inject constructor(
             }
         }
     }
+
     fun getTodaysExercise() {
         viewModelScope.launch {
             try {
