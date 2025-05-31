@@ -6,10 +6,12 @@ CricMate is an advanced cricket coaching and analysis app designed for players a
 
 ## App Images
 
-![Screenshot 1](./images/image 1.png)  
-![Screenshot 2](./images/image 2.png)  
-![Screenshot 3](./images/image 3.png)  
-![Screenshot 4](./images/image 4.png)
+<p float="left">
+  <img src="images/Image 1.jpg" alt="3D View of Bowling" width="200" style="margin-right:10px"/>
+  <img src="images/Image 3.jpg" alt="Bowling Analysis" width="200" style="margin-right:10px"/>
+  <img src="images/Image 4.jpg" alt="Weekly Bowling Data" width="200" style="margin-right:10px"/>
+  <img src="images/Image 2.jpg" alt="Progress Chart" width="200" />
+</p>
 
 
 ## Features
