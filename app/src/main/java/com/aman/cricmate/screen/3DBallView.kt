@@ -1,5 +1,6 @@
 package com.aman.cricmate.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -8,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aman.cricmate.viewModel.ThreeDViewModel
+import com.google.android.filament.Camera
 import io.github.sceneview.Scene
 import io.github.sceneview.loaders.ModelLoader
 import io.github.sceneview.math.Position
@@ -27,77 +29,61 @@ import kotlin.math.sqrt
 
 @Composable
 fun ThreeDBallView(ballId: String, viewModel: ThreeDViewModel = hiltViewModel()) {
-    val trackingPoints = viewModel.trackingPoints
     val engine = rememberEngine()
     val modelLoader = rememberModelLoader(engine)
     val cameraNode = rememberCameraNode(engine)
+
     LaunchedEffect(Unit) {
         viewModel.getBallDetails(ballId)
     }
-    cameraNode.position = Position(6f, 12.5f, 10f)
+
+    cameraNode.position = Position(0f, 0f, 20f)
+    cameraNode.setProjection(
+        fovInDegrees = 90.0,
+        aspect = 9.0/16,
+        near = 0.1,
+        far = 100.0,
+        direction = Camera.Fov.VERTICAL
+    )
+
+
+
     val ballNode = remember {
         ModelNode(
             modelInstance = modelLoader.createModelInstance("model/ball.glb"),
             scaleToUnits = 1f
         ).apply {
-            position = Position(6f, 12f, -20.0f)
+            position = Position(0f, 0f, 0f)
         }
     }
 
-    val xValues = trackingPoints.map { it.x }
-    val yValues = trackingPoints.map { it.y }
-    val zValues = trackingPoints.map { it.z }
+    val pitchNode = remember {
+        ModelNode(
+            modelInstance = modelLoader.createModelInstance("model/pitch.glb")
+        ).apply {
+            position = Position(0f, 0f, 0f)
+        }
+    }
 
-    val xMin = xValues.minOrNull() ?: 0f
-    val xMax = xValues.maxOrNull() ?: 1f
-    val yMin = yValues.minOrNull() ?: 0f
-    val yMax = yValues.maxOrNull() ?: 1f
-    val zMin = zValues.minOrNull() ?: 0f
-    val zMax = zValues.maxOrNull() ?: 1f
+    val trackingPoints = viewModel.trackingPoints
 
     val traceNodes = remember { mutableStateListOf<ModelNode>() }
 
+    LaunchedEffect(trackingPoints) {
+        if (trackingPoints.size >= 2) {
+            Log.d("trackingPoints2", trackingPoints.toString())
 
-    LaunchedEffect(Unit) {
-        for (i in 0 until trackingPoints.lastIndex) {
+            for (i in 0 until trackingPoints.lastIndex) {
+                val (x1, y1, z1) = trackingPoints[i]
+                val (x2, y2, z2) = trackingPoints[i + 1]
 
-            val (x1, y1, z1) = trackingPoints[i]
-            val (x2, y2, z2) = trackingPoints[i + 1]
+                val fromPos = mapToSceneCoordinates3D( x1, y1, z1)
+                val toPos = mapToSceneCoordinates3D(x2, y2, z2)
 
-            val fromPos = mapToSceneCoordinates3D(
-                x1,
-                y1,
-                z1,
-                xMin,
-                xMax,
-                yMin,
-                yMax,
-                zMin,
-                zMax,
-                0f to 12f,
-                0f to 25f,
-                -20f to 0f
-            )
-            val toPos = mapToSceneCoordinates3D(
-                x2,
-                y2,
-                z2,
-                xMin,
-                xMax,
-                yMin,
-                yMax,
-                zMin,
-                zMax,
-                0f to 12f,
-                0f to 25f,
-                -20f to 0f
-            )
-
-            animateXYZPosition(ballNode, fromPos, toPos, 100)
-
-
-            val traceNode = createTraceLine(modelLoader, fromPos, toPos)
-            traceNodes.addAll(traceNode)
+                animateXYZPosition(ballNode, fromPos, toPos, 100)
+                val traceNode = createTraceLine(modelLoader, fromPos, toPos)
+                traceNodes.addAll(traceNode)
+            }
         }
     }
 
@@ -107,8 +93,9 @@ fun ThreeDBallView(ballId: String, viewModel: ThreeDViewModel = hiltViewModel())
         engine = engine,
         modelLoader = modelLoader,
         cameraNode = cameraNode,
-        childNodes = listOf(ballNode) + traceNodes
+        childNodes = listOf(ballNode, pitchNode)+ traceNodes
     )
+
 }
 
 suspend fun animateXYZPosition(node: ModelNode, from: Position, to: Position, durationMs: Long) {
@@ -130,17 +117,19 @@ suspend fun animateXYZPosition(node: ModelNode, from: Position, to: Position, du
 fun mapToSceneCoordinates3D(
     x: Float,
     y: Float,
-    z: Float,
-    xMin: Float,
-    xMax: Float,
-    yMin: Float,
-    yMax: Float,
-    zMin: Float,
-    zMax: Float,
-    sceneXRange: Pair<Float, Float>,
-    sceneYRange: Pair<Float, Float>,
-    sceneZRange: Pair<Float, Float>
+    z: Float
 ): Position {
+    val xMin = -360f
+    val xMax = 360f
+    val yMin = 1280f
+    val yMax = 0f
+    val zMin = 0f
+    val zMax = 720f
+
+    val sceneXRange = -4f to 4f
+    val sceneYRange = -10f to 10f
+    val sceneZRange = 0f to 10f
+
     val xNormalized = (x - xMin) / (xMax - xMin)
     val yNormalized = (y - yMin) / (yMax - yMin)
     val zNormalized = (z - zMin) / (zMax - zMin)
@@ -151,6 +140,7 @@ fun mapToSceneCoordinates3D(
 
     return Position(xScene, yScene, zScene)
 }
+
 
 
 fun createTraceLine(
@@ -169,20 +159,17 @@ fun createTraceLine(
 
     val nodes = mutableListOf<ModelNode>()
 
-    // Create vector along Y-axis (the original up direction of cylinder)
     val up = floatArrayOf(0f, 1f, 0f)
     val dirVec = floatArrayOf(nx, ny, nz)
 
-    // Compute cross product for axis of rotation
     val axis = floatArrayOf(
         up[1] * dirVec[2] - up[2] * dirVec[1],
         up[2] * dirVec[0] - up[0] * dirVec[2],
         up[0] * dirVec[1] - up[1] * dirVec[0]
     )
 
-    // Compute angle between the two vectors
     val dot = up[0] * dirVec[0] + up[1] * dirVec[1] + up[2] * dirVec[2]
-    val angle = acos(dot.coerceIn(-1f, 1f)) // clamp due to precision
+    val angle = acos(dot.coerceIn(-1f, 1f))
 
     val segmentLength = length / segments
 

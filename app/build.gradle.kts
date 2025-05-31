@@ -116,4 +116,6 @@ dependencies {
 //    SceneView
     implementation(libs.sceneview)
     implementation(libs.core)
+
+    implementation(libs.androidx.material.icons.extended)
 }

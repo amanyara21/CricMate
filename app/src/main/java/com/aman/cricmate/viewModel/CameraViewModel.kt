@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModel
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.aman.cricmate.utils.ApiService
 import com.aman.cricmate.utils.BallDetectionWorker
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -111,6 +110,7 @@ class CameraViewModel @Inject constructor(
 
         isRecording.value = true
         val time = System.currentTimeMillis()
+        Log.d("videoTime", time.toString())
         val fileName = "video_${time}.mp4"
         val outputFile = File(context.cacheDir, fileName)
         val outputOptions = FileOutputOptions.Builder(outputFile).build()
@@ -125,7 +125,7 @@ class CameraViewModel @Inject constructor(
 
                         enqueueBallDetectionWorker(
                             context = context,
-                            time = time,
+                            time = time.toString(),
                             videoFile = outputFile,
                             sessionId = sessionId,
                             userId = customUserId!!,
@@ -151,14 +151,14 @@ class CameraViewModel @Inject constructor(
 
     private fun enqueueBallDetectionWorker(
         context: Context,
-        time: Long,
+        time: String,
         videoFile: File,
         sessionId: String,
         userId: String,
         angle: String
     ) {
 
-        Log.d("VideoResolution", "working2")
+        Log.d("videoTime", time)
         val inputData = workDataOf(
             "videoPath" to videoFile.absolutePath,
             "sessionId" to sessionId,

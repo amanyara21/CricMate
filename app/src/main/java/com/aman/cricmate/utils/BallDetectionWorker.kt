@@ -23,7 +23,7 @@ class BallDetectionWorker @AssistedInject constructor(
         val videoPath = inputData.getString("videoPath") ?: return Result.failure()
         val time = inputData.getString("time")
         val videoUri = Uri.fromFile(File(videoPath))
-
+        Log.d("videoTime2", time.toString())
         return try {
             val positions = detectBallPositionsFromVideo(applicationContext, videoUri, time)
 

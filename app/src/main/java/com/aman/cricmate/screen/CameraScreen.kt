@@ -74,17 +74,22 @@ fun CameraScreen(
             Text("Angle: ${viewModel.angle}")
             Spacer(Modifier.height(12.dp))
 
-
             Button(
                 onClick = {
                     viewModel.startRecordingRequest()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !viewModel.isRecording.value
+                enabled = !viewModel.isRecording.value && viewModel.angle != "Side"
             ) {
-                Text(if (viewModel.isRecording.value) "Stop Recording" else "Start Recording")
+                Text(
+                    if (viewModel.isRecording.value)
+                        "Stop Recording"
+                    else
+                        "Start Recording"
+                )
             }
         }
+
     }
 }
 

@@ -113,7 +113,10 @@ fun HomeScreen(
             color = Color(0xFF311B92)
         )
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.clickable {
+                outerNavController.navigate("ballScreen/${userSessionManager.id.value}")
+            }
         ) {
             FullStatCardWithProgress(
                 title = "Balls Bowled",

@@ -16,7 +16,7 @@ fun detectBallPositionsFromVideo(context: Context, videoUri: Uri, time: String?)
     val retriever = MediaMetadataRetriever()
     val positions = mutableListOf<Ball>()
     val videoTime = time?.toLong() ?: 0L
-
+    Log.d("videoTime3", videoTime.toString())
     try {
         retriever.setDataSource(context, videoUri)
 

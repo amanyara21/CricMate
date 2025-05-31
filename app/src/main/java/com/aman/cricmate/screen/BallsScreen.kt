@@ -79,8 +79,9 @@ fun BallsScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    items(ballList) { ball ->
-                        BallCard(ball) {
+                    items(ballList.size) { index ->
+                        val ball = ballList[index]
+                        BallCard(ball, index+1) {
                             navController.navigate("show3d/${ball._id}")
                         }
                     }

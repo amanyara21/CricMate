@@ -1,11 +1,12 @@
 package com.aman.cricmate.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aman.cricmate.model.BallResponse
+//import com.aman.cricmate.model.BallResponse
 import com.aman.cricmate.utils.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sceneview.math.Position
@@ -25,6 +26,7 @@ class ThreeDViewModel @Inject constructor(
                 val response = apiService.getBallById(ballId)
                 if (response.isSuccessful) {
                     trackingPoints = response.body()?.coordinates ?: emptyList()
+                    Log.d("trackingPoints", trackingPoints.toString())
                 }
             } catch (e: Exception) {
                 error=e.message
